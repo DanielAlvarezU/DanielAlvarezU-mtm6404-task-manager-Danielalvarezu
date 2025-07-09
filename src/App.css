@@ -1,4 +1,4 @@
-/* === General === */
+
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
@@ -12,9 +12,9 @@ body {
   padding: 1rem;
 }
 
-/* === Navbar === */
+
 .navbar {
-  background-color: #0077cc;  /* Azul pro, cámbialo si quieres */
+  background-color: #0077cc;  
   color: white;
   padding: 1rem 0;
   text-align: center;
@@ -25,9 +25,9 @@ body {
   font-size: 1.8rem;
 }
 
-/* === Footer === */
+
 .footer {
-  background-color: #333;  /* Gris oscuro para contraste */
+  background-color: #333;  
   color: white;
   padding: 1rem 0;
   text-align: center;
@@ -38,7 +38,7 @@ body {
   margin: 0;
 }
 
-/* === Card === */
+
 .card {
   background-color: #fff;
   padding: 1rem;
@@ -47,13 +47,13 @@ body {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* === Headings & Text === */
+
 h1, h3, p {
   margin: 0.5rem 0;
   text-align: center;
 }
 
-/* === Task Form === */
+
 .task-form {
   display: flex;
   flex-direction: column;
@@ -68,7 +68,7 @@ h1, h3, p {
   border: 1px solid #ccc;
 }
 
-/* === Task Item === */
+
 .task-item {
   display: flex;
   justify-content: space-between;
@@ -92,7 +92,7 @@ h1, h3, p {
   padding: 0.3rem 0.6rem;
 }
 
-/* === Priority Colors === */
+
 .priority {
   font-size: 0.85rem;
   padding: 2px 6px;
@@ -114,7 +114,7 @@ h1, h3, p {
   color: white;
 }
 
-/* === Toggle Button === */
+
 .toggle-btn {
   display: block;
   margin: 1rem auto;
@@ -130,7 +130,7 @@ h1, h3, p {
   background-color: #111;
 }
 
-/* === Responsive === */
+
 @media (max-width: 600px) {
   .task-item {
     flex-direction: column;
