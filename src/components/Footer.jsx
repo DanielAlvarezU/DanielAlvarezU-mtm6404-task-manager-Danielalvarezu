@@ -1,10 +1,14 @@
 import React from 'react';
 
-export default function Footer() {
+function Footer() {
   return (
     <footer className="footer">
       <p>&copy; 2025 D-NAL. All rights reserved.</p>
     </footer>
   );
 }
+
+export default Footer;
+
+
 

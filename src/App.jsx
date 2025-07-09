@@ -1,27 +1,71 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
-import TaskList from './components/TaskList';
 import Footer from './components/Footer';
-import './App.css';
-
+import TaskList from './components/TaskList';
+import TaskForm from './components/Taskform';
 
 function App() {
+  const [tasks, setTasks] = useState([]);
+  const [showCompleted, setShowCompleted] = useState(true);
+
+  // ✅ Load tasks from localStorage on first load
+  useEffect(() => {
+    const storedTasks = JSON.parse(localStorage.getItem('tasks'));
+    if (storedTasks) setTasks(storedTasks);
+  }, []);
+
+  // ✅ Save tasks to localStorage when tasks change
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
+
+  // ✅ Add new task
+  const addTask = (text, priority) => {
+    const newTask = {
+      id: Date.now(),
+      text,
+      priority,
+      completed: false
+    };
+    setTasks(prev => [...prev, newTask]);
+  };
+
+  // ✅ Toggle completion
+  const toggleCompletion = (id) => {
+    setTasks(prev =>
+      prev.map(task =>
+        task.id === id ? { ...task, completed: !task.completed } : task
+      )
+    );
+  };
+
+  // ✅ Delete task
+  const deleteTask = (id) => {
+    setTasks(prev => prev.filter(task => task.id !== id));
+  };
+
   return (
-    <div className="app">
+    <>
       <Navbar />
-      <main className="content">
-        <section className="intro">
-          <h2>Welcome to the D-NAL Task Manager</h2>
-          <p>Manage your brand like a pro.</p>
-        </section>
-        <TaskList />
+      <main>
+        <TaskForm addTask={addTask} />
+        <button onClick={() => setShowCompleted(!showCompleted)}>
+          {showCompleted ? "Hide Completed" : "Show Completed"}
+        </button>
+        <TaskList
+          tasks={tasks}
+          showCompleted={showCompleted}
+          toggleCompletion={toggleCompletion}
+          deleteTask={deleteTask}
+        />
       </main>
       <Footer />
-    </div>
+    </>
   );
 }
 
 export default App;
+
 
 
 

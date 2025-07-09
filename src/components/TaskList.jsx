@@ -1,32 +1,42 @@
 import React from 'react';
+import TaskItem from './TaskItem';
 import Card from './Card';
 
-const tasks = [
-  { id: 1, title: 'Plan streetwear photoshoot', completed: false },
-  { id: 2, title: 'Post on Instagram', completed: true },
-  { id: 3, title: 'Design new logo', completed: false },
-  { id: 4, title: 'Order fabric samples', completed: true },
-  { id: 5, title: 'Reply to influencer DMs', completed: false }
-];
+function TaskList({ tasks = [], showCompleted, toggleCompletion, deleteTask }) {
+  const priorityValue = {
+    High: 1,
+    Medium: 2,
+    Low: 3
+  };
 
-export default function TaskList() {
+  const filteredTasks = showCompleted
+    ? tasks
+    : tasks.filter((task) => !task.completed);
+
+  const sortedTasks = [...filteredTasks].sort(
+    (a, b) => priorityValue[a.priority] - priorityValue[b.priority]
+  );
+
   return (
-    <section className="task-section">
+    <Card>
       <h3>Task List</h3>
-      <div className="task-list">
-        {tasks.map(task => (
-          <Card key={task.id}>
-            <div className="task-item">
-              <span>{task.title}</span>
-              {task.completed 
-                ? <span className="status done">Completed ✅</span> 
-                : <span className="status pending">Pending ⏳</span>
-              }
-            </div>
-          </Card>
-        ))}
-      </div>
-    </section>
+      {sortedTasks.length === 0 ? (
+        <p>No tasks to show.</p>
+      ) : (
+        sortedTasks.map((task) => (
+          <TaskItem
+            key={task.id}
+            task={task}
+            toggleCompletion={toggleCompletion}
+            deleteTask={deleteTask}
+          />
+        ))
+      )}
+    </Card>
   );
 }
+
+export default TaskList;
+
+
 

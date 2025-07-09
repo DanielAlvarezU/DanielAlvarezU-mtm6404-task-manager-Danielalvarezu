@@ -1,14 +1,23 @@
-function TaskItem({ title, completed, children }) {
+import React from 'react';
+
+function TaskItem({ task, toggleCompletion, deleteTask }) {
   return (
-    <li className="border p-2 rounded mb-2 bg-white shadow">
-      <div className="flex justify-between items-center">
-        <span className={completed ? "line-through text-gray-500" : ""}>
-          {title}
+    <div className={`task-item ${task.completed ? 'completed' : ''}`}>
+      <div className="task-info">
+        <strong>{task.text}</strong>
+        <span className={`priority ${task.priority.toLowerCase()}`}>
+          {task.priority}
         </span>
-        {children}
       </div>
-    </li>
+      <div className="task-actions">
+        <button onClick={() => toggleCompletion(task.id)}>
+          {task.completed ? 'Undo' : 'Complete'}
+        </button>
+        <button onClick={() => deleteTask(task.id)}>Delete</button>
+      </div>
+    </div>
   );
 }
 
 export default TaskItem;
+
