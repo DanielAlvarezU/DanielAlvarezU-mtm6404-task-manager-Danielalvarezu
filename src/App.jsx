@@ -8,18 +8,18 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [showCompleted, setShowCompleted] = useState(true);
 
-  // ✅ Load tasks from localStorage on first load
+
   useEffect(() => {
     const storedTasks = JSON.parse(localStorage.getItem('tasks'));
     if (storedTasks) setTasks(storedTasks);
   }, []);
 
-  // ✅ Save tasks to localStorage when tasks change
+  
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
-  // ✅ Add new task
+ 
   const addTask = (text, priority) => {
     const newTask = {
       id: Date.now(),
@@ -30,7 +30,7 @@ function App() {
     setTasks(prev => [...prev, newTask]);
   };
 
-  // ✅ Toggle completion
+  
   const toggleCompletion = (id) => {
     setTasks(prev =>
       prev.map(task =>
@@ -39,7 +39,7 @@ function App() {
     );
   };
 
-  // ✅ Delete task
+  
   const deleteTask = (id) => {
     setTasks(prev => prev.filter(task => task.id !== id));
   };
