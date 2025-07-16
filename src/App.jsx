@@ -8,18 +8,17 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [showCompleted, setShowCompleted] = useState(true);
 
-
   useEffect(() => {
-    const storedTasks = JSON.parse(localStorage.getItem('tasks'));
-    if (storedTasks) setTasks(storedTasks);
+    const storedTasks = localStorage.getItem('tasks');
+    if (storedTasks && JSON.parse(storedTasks).length > 0) {
+      setTasks(JSON.parse(storedTasks));
+    }
   }, []);
 
-  
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
 
- 
   const addTask = (text, priority) => {
     const newTask = {
       id: Date.now(),
@@ -30,7 +29,6 @@ function App() {
     setTasks(prev => [...prev, newTask]);
   };
 
-  
   const toggleCompletion = (id) => {
     setTasks(prev =>
       prev.map(task =>
@@ -39,7 +37,6 @@ function App() {
     );
   };
 
-  
   const deleteTask = (id) => {
     setTasks(prev => prev.filter(task => task.id !== id));
   };
@@ -65,6 +62,7 @@ function App() {
 }
 
 export default App;
+
 
 
 
