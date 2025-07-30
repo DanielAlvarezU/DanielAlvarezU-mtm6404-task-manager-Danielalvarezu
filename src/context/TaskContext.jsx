@@ -10,7 +10,9 @@ export function TaskProvider({ children }) {
     const stored = JSON.parse(localStorage.getItem('taskData'));
     if (stored) {
       setLists(stored.lists || []);
-      setSelectedListId(stored.selectedListId || null);
+      if (stored.selectedListId) {
+        setSelectedListId(stored.selectedListId);
+      }
     }
   }, []);
 
