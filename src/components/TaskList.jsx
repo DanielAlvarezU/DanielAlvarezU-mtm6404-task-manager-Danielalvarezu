@@ -4,9 +4,9 @@ import Card from './Card';
 
 function TaskList({ tasks = [], showCompleted, toggleCompletion, deleteTask }) {
   const priorityValue = {
-    High: 1,
-    Medium: 2,
-    Low: 3
+    high: 1,
+    medium: 2,
+    low: 3
   };
 
   const filteredTasks = showCompleted
@@ -14,7 +14,9 @@ function TaskList({ tasks = [], showCompleted, toggleCompletion, deleteTask }) {
     : tasks.filter((task) => !task.completed);
 
   const sortedTasks = [...filteredTasks].sort(
-    (a, b) => priorityValue[a.priority] - priorityValue[b.priority]
+    (a, b) =>
+      priorityValue[a.priority.trim().toLowerCase()] -
+      priorityValue[b.priority.trim().toLowerCase()]
   );
 
   return (
@@ -37,6 +39,7 @@ function TaskList({ tasks = [], showCompleted, toggleCompletion, deleteTask }) {
 }
 
 export default TaskList;
+
 
 
 

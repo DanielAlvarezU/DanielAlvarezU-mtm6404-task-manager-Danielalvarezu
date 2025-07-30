@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
-
 body {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #f2f2f2, #e0e0e0);
   margin: 0;
   padding: 0;
+  color: #111;
 }
 
 .app {
@@ -13,7 +13,6 @@ body {
   margin: 0 auto;
   padding: 2rem 1rem;
 }
-
 
 .navbar {
   background: linear-gradient(90deg, #000000, #333333);
@@ -29,13 +28,6 @@ body {
   letter-spacing: 2px;
 }
 
-.navbar p {
-  margin: 0.5rem 0 0;
-  font-size: 0.9rem;
-  opacity: 0.85;
-}
-
-
 .footer {
   background-color: #111;
   color: #fff;
@@ -45,33 +37,36 @@ body {
   border-top: 4px solid #ff4d4d;
 }
 
-.footer p {
-  margin: 0;
-}
-
-
 .card {
   background-color: #fff;
   padding: 1.5rem;
   margin-bottom: 1rem;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-
 
 .task-form {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+  margin-bottom: 2rem;
 }
 
 .task-form input,
-.task-form select,
-.task-form button {
+.task-form button,
+.task-form select {
   padding: 0.75rem;
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.task-form input:focus,
+.task-form select:focus {
+  outline: none;
+  border-color: #ff4d4d;
+  box-shadow: 0 0 0 2px rgba(255, 77, 77, 0.3);
 }
 
 .task-form button {
@@ -79,12 +74,57 @@ body {
   color: #fff;
   cursor: pointer;
   border: none;
+  font-weight: bold;
 }
 
 .task-form button:hover {
-  background: #333;
+  background: #ff4d4d;
+  color: #fff;
 }
 
+/* Select de prioridad con colores dinámicos */
+.priority-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.priority-select.high {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.priority-select.medium {
+  background-color: #ffc107;
+  color: black;
+}
+
+.priority-select.low {
+  background-color: #4caf50;
+  color: white;
+}
+
+/* Puntos de color al lado de prioridad */
+.priority-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.priority-dot.high {
+  background-color: #ff4d4d;
+}
+
+.priority-dot.medium {
+  background-color: #ffc107;
+}
+
+.priority-dot.low {
+  background-color: #4caf50;
+}
 
 .task-item {
   display: flex;
@@ -111,34 +151,13 @@ body {
   color: #fff;
   border: none;
   border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .task-actions button:hover {
-  background: #333;
+  background: #ff4d4d;
 }
-
-
-.priority {
-  font-size: 0.8rem;
-  padding: 2px 8px;
-  border-radius: 4px;
-}
-
-.priority.high {
-  background-color: #ff4d4d;
-  color: white;
-}
-
-.priority.medium {
-  background-color: #ffc107;
-  color: black;
-}
-
-.priority.low {
-  background-color: #4caf50;
-  color: white;
-}
-
 
 .toggle-btn {
   display: block;
@@ -149,13 +168,15 @@ body {
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
 }
 
 .toggle-btn:hover {
-  background-color: #333;
+  background-color: #ff4d4d;
 }
 
-
+/* Responsive */
 @media (max-width: 700px) {
   .task-item {
     flex-direction: column;
@@ -163,7 +184,8 @@ body {
   }
 
   .task-actions {
-    margin-top: 0.5rem; }
+    margin-top: 0.5rem;
+  }
 
   .navbar h1 {
     font-size: 1.5rem;
@@ -172,6 +194,9 @@ body {
   .footer {
     text-align: center;
   }
+
+  .task-form {
+    gap: 0.5rem;
+  }
+  
 }
-
-

@@ -8,7 +8,7 @@ function TaskForm({ addTask }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (text.trim() === '') return;
-    addTask(text, priority);
+    addTask(text.trim(), priority);
     setText('');
     setPriority('Medium');
   };
@@ -16,7 +16,7 @@ function TaskForm({ addTask }) {
   return (
     <Card>
       <h3>Add Task</h3>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="task-form">
         <input
           type="text"
           placeholder="Task description"
@@ -26,6 +26,7 @@ function TaskForm({ addTask }) {
         <select
           value={priority}
           onChange={(e) => setPriority(e.target.value)}
+          className={`priority-select ${priority.trim().toLowerCase()}`}
         >
           <option>High</option>
           <option>Medium</option>

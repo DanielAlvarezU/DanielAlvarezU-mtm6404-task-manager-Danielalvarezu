@@ -4,8 +4,12 @@ function TaskItem({ task, toggleCompletion, deleteTask }) {
   return (
     <div className={`task-item ${task.completed ? 'completed' : ''}`}>
       <div className="task-info">
-        <strong>{task.text}</strong>
-        <span className={`priority ${task.priority.toLowerCase()}`}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          {/* Usamos trim() y toLowerCase() para evitar errores de clase */}
+          <span className={`priority-dot ${task.priority.trim().toLowerCase()}`}></span>
+          <strong>{task.text}</strong>
+        </div>
+        <span className={`priority ${task.priority.trim().toLowerCase()}`}>
           {task.priority}
         </span>
       </div>
@@ -20,4 +24,5 @@ function TaskItem({ task, toggleCompletion, deleteTask }) {
 }
 
 export default TaskItem;
+
 
