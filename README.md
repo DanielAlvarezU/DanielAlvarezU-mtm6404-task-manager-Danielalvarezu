@@ -3,29 +3,49 @@ Daniel Alvarez Urbina
 
 # D-NAL Task Manager
 
-This is my **Capstone Iteration 3** project for the **Web Applications** course.  
-It’s a **Task Manager** built with **React 18** and **Vite**.
+This is my Capstone Iteration 04 project for the Web Applications course (MTM6404).
+
+It is a task manager built with React 18 and Vite, featuring improved functionality and data persistence.
+
+---
 
 ## What does it do?
 
-- Lets you **add tasks** with text and a priority (High, Medium, or Low).
-- Tasks are shown **sorted by priority**.
-- You can **mark tasks as complete or incomplete**.
-- You can **delete tasks**.
-- There’s a button to **show or hide completed tasks**.
-- Everything is saved in **`localStorage`**, so tasks stay even if you refresh.
-- The app is **responsive**, so it looks good on desktop and mobile.
+- Allows creating multiple task lists.
+- Lets you add tasks with text and priority (High, Medium, or Low).
+- Tasks are displayed sorted by priority (High first, then Medium, then Low).
+- You can mark tasks as complete or incomplete.
+- You can delete tasks.
+- You can toggle showing or hiding completed tasks with a button.
+- Displays only one list at a time and lets you navigate between lists.
+- You can add new lists and delete existing lists.
+- The app remembers the selected list even after refreshing or sharing the URL.
+- All data is saved to `localStorage` so tasks and lists persist on page reload.
+- Responsive design works well on desktop and mobile devices.
+
+---
 
 ## How does it work?
 
-It uses **React components** like `Navbar`, `TaskForm`, `TaskList`, `TaskItem`, `Footer`, and `Card`.  
-It has **conditional rendering**, **list rendering**, and uses **props** and the **children prop** to keep things organized.
+- Built with React components like `Navbar`, `TaskForm`, `TaskList`, `TaskItem`, `Footer`, `AddListForm`, `ListSelector`, and `TaskPage`.
+- Uses React Router for routing and navigation between different lists.
+- Utilizes React Context API for global state management of lists, tasks, and current selection.
+- Implements conditional rendering and list rendering for dynamic UI.
+- Employs the `children` prop for reusable components and clean structure.
+- Saves and retrieves lists, tasks, and selected list from `localStorage` for persistence.
+
+---
 
 ## Technologies
 
-- React 18
-- Vite
-- HTML5 & CSS3
+- React 18  
+- Vite  
+- React Router DOM  
+- HTML5 & CSS3 (custom styling)  
+- Context API  
+- LocalStorage for persistence
+
+---
 
 ## Notes
 
