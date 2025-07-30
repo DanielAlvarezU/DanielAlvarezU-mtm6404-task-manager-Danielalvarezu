@@ -11,26 +11,39 @@ function TaskPage() {
     selectedList,
     addTask,
     toggleTask,
-    deleteTask
+    deleteTask,
+    lists
   } = useContext(TaskContext);
 
   const [showCompleted, setShowCompleted] = useState(true);
 
+  
   useEffect(() => {
-    if (id) selectList(id);
+    if (id) {
+      selectList(id);
+    }
   }, [id, selectList]);
 
-  if (!selectedList) return <p>List not found.</p>;
+  
+  if (lists.length > 0 && !selectedList) {
+    return <p>Loading list...</p>;
+  }
 
+  
+  if (lists.length > 0 && !lists.find((list) => list.id === id)) {
+    return <p>List not found.</p>;
+  }
+
+  
   return (
     <div className="task-page">
-      <h2>{selectedList.title}</h2>
+      <h2>{selectedList?.title}</h2>
       <TaskForm addTask={addTask} />
       <button onClick={() => setShowCompleted((prev) => !prev)}>
         {showCompleted ? 'Hide Completed' : 'Show Completed'}
       </button>
       <TaskList
-        tasks={selectedList.tasks}
+        tasks={selectedList?.tasks || []}
         showCompleted={showCompleted}
         toggleCompletion={toggleTask}
         deleteTask={deleteTask}
