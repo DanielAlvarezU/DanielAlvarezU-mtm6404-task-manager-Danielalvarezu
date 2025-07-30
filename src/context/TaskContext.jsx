@@ -1,23 +1,25 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useRef } from 'react';
 
 export const TaskContext = createContext();
 
 export function TaskProvider({ children }) {
   const [lists, setLists] = useState([]);
   const [selectedListId, setSelectedListId] = useState(null);
+  const hasLoaded = useRef(false);
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem('taskData'));
     if (stored) {
       setLists(stored.lists || []);
-      if (stored.selectedListId) {
-        setSelectedListId(stored.selectedListId);
-      }
+      setSelectedListId(stored.selectedListId || null);
     }
+    hasLoaded.current = true;
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('taskData', JSON.stringify({ lists, selectedListId }));
+    if (hasLoaded.current) {
+      localStorage.setItem('taskData', JSON.stringify({ lists, selectedListId }));
+    }
   }, [lists, selectedListId]);
 
   const addList = (title) => {
