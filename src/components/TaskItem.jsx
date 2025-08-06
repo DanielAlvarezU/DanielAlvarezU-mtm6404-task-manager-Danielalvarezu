@@ -5,7 +5,6 @@ function TaskItem({ task, toggleCompletion, deleteTask }) {
     <div className={`task-item ${task.completed ? 'completed' : ''}`}>
       <div className="task-info">
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          {/* Usamos trim() y toLowerCase() para evitar errores de clase */}
           <span className={`priority-dot ${task.priority.trim().toLowerCase()}`}></span>
           <strong>{task.text}</strong>
         </div>
@@ -14,7 +13,7 @@ function TaskItem({ task, toggleCompletion, deleteTask }) {
         </span>
       </div>
       <div className="task-actions">
-        <button onClick={() => toggleCompletion(task.id)}>
+        <button onClick={() => toggleCompletion(task.id, task.completed)}>
           {task.completed ? 'Undo' : 'Complete'}
         </button>
         <button onClick={() => deleteTask(task.id)}>Delete</button>

@@ -1,109 +1,118 @@
 import React, { createContext, useEffect, useState } from 'react';
+import {
+  collection,
+  addDoc,
+  deleteDoc,
+  doc,
+  updateDoc,
+  query,
+  orderBy,
+  onSnapshot,
+  serverTimestamp
+} from 'firebase/firestore';
+import db from '../firebase';
 
 export const TaskContext = createContext();
 
 export const TaskProvider = ({ children }) => {
   const [lists, setLists] = useState([]);
   const [selectedListId, setSelectedListId] = useState(null);
-  const [hasLoaded, setHasLoaded] = useState(false); 
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  
+  const fetchLists = () => {
+    const q = query(collection(db, 'lists'), orderBy('createdAt', 'desc'));
+    const unsub = onSnapshot(q, (snapshot) => {
+      const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setLists(data);
+      if (data.length > 0) {
+        setSelectedListId(prev => prev || data[0].id);
+      }
+    });
+    return unsub;
+  };
+
+  const fetchTasks = (listId) => {
+    const q = query(collection(db, `lists/${listId}/tasks`), orderBy('priority'));
+    const unsub = onSnapshot(q, (snapshot) => {
+      const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setTasks(data);
+    });
+    return unsub;
+  };
+
   useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem('taskData'));
-    if (storedData) {
-      console.log('📦 Cargando desde localStorage:', storedData);
-      setLists(storedData.lists || []);
-      setSelectedListId(storedData.selectedListId || null);
-    }
-    setHasLoaded(true); 
+    const unsubLists = fetchLists();
+    setLoading(false);
+    return () => unsubLists();
   }, []);
 
-  
   useEffect(() => {
-    if (!hasLoaded) return;
-    const data = { lists, selectedListId };
-    console.log('💾 Guardando en localStorage:', data);
-    localStorage.setItem('taskData', JSON.stringify(data));
-  }, [lists, selectedListId, hasLoaded]);
+    if (selectedListId) {
+      const unsubTasks = fetchTasks(selectedListId);
+      return () => unsubTasks();
+    } else {
+      setTasks([]);
+    }
+  }, [selectedListId]);
 
-  
-  const addList = (title) => {
-    const newList = {
-      id: Date.now().toString(),
-      title,
-      tasks: [],
-    };
-    setLists((prev) => [...prev, newList]);
-    setSelectedListId(newList.id);
+  const addList = async (title) => {
+    try {
+      const docRef = await addDoc(collection(db, 'lists'), {
+        title,
+        createdAt: serverTimestamp()
+      });
+      setSelectedListId(docRef.id);
+    } catch (error) {
+      console.error("❌ Error al agregar la lista:", error);
+    }
   };
 
-  
-  const deleteList = (id) => {
-    setLists((prev) => {
-      const newLists = prev.filter((list) => list.id !== id);
-      
+  const deleteList = async (id) => {
+    try {
+      await deleteDoc(doc(db, 'lists', id));
       if (id === selectedListId) {
-        setSelectedListId(newLists.length > 0 ? newLists[0].id : null);
+        const remaining = lists.filter((list) => list.id !== id);
+        setSelectedListId(remaining.length > 0 ? remaining[0].id : null);
       }
-      return newLists;
-    });
+    } catch (error) {
+      console.error("❌ Error al eliminar la lista:", error);
+    }
   };
 
-  
   const selectList = (id) => {
     setSelectedListId(id);
   };
 
-  
-  const addTask = (text, priority) => {
+  const addTask = async (text, priority) => {
     if (!selectedListId) return;
-
-    const newTask = {
-      id: Date.now(),
-      text,
-      priority,
-      completed: false,
-    };
-
-    setLists((prev) =>
-      prev.map((list) =>
-        list.id === selectedListId
-          ? { ...list, tasks: [...list.tasks, newTask] }
-          : list
-      )
-    );
+    try {
+      await addDoc(collection(db, `lists/${selectedListId}/tasks`), {
+        text,
+        priority,
+        completed: false,
+        createdAt: serverTimestamp()
+      });
+    } catch (error) {
+      console.error("❌ Error al agregar la tarea:", error);
+    }
   };
 
- 
-  const toggleTask = (taskId) => {
-    setLists((prev) =>
-      prev.map((list) =>
-        list.id === selectedListId
-          ? {
-              ...list,
-              tasks: list.tasks.map((task) =>
-                task.id === taskId
-                  ? { ...task, completed: !task.completed }
-                  : task
-              ),
-            }
-          : list
-      )
-    );
+  const toggleTask = async (taskId, currentStatus) => {
+    try {
+      const ref = doc(db, `lists/${selectedListId}/tasks`, taskId);
+      await updateDoc(ref, { completed: !currentStatus });
+    } catch (error) {
+      console.error("❌ Error al actualizar el estado de la tarea:", error);
+    }
   };
 
-  
-  const deleteTask = (taskId) => {
-    setLists((prev) =>
-      prev.map((list) =>
-        list.id === selectedListId
-          ? {
-              ...list,
-              tasks: list.tasks.filter((task) => task.id !== taskId),
-            }
-          : list
-      )
-    );
+  const deleteTask = async (taskId) => {
+    try {
+      await deleteDoc(doc(db, `lists/${selectedListId}/tasks`, taskId));
+    } catch (error) {
+      console.error("❌ Error al eliminar la tarea:", error);
+    }
   };
 
   const selectedList = lists.find((list) => list.id === selectedListId);
@@ -114,6 +123,8 @@ export const TaskProvider = ({ children }) => {
         lists,
         selectedListId,
         selectedList,
+        tasks,
+        loading,
         addList,
         deleteList,
         selectList,
@@ -126,4 +137,3 @@ export const TaskProvider = ({ children }) => {
     </TaskContext.Provider>
   );
 };
-
