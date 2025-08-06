@@ -3,50 +3,70 @@ Daniel Alvarez Urbina
 
 # D-NAL Task Manager
 
-This is my Capstone Iteration 04 project for the Web Applications course (MTM6404).
+This is my Capstone Iteration 04/05 project for the **Web Applications** course (MTM6404), created by **Daniel Alvarez Urbina** — ID: 90541117079.
 
-It is a task manager built with React 18 and Vite, featuring improved functionality and data persistence.
-
----
-
-## What does it do?
-
-- Allows creating multiple task lists.
-- Lets you add tasks with text and priority (High, Medium, or Low).
-- Tasks are displayed sorted by priority (High first, then Medium, then Low).
-- You can mark tasks as complete or incomplete.
-- You can delete tasks.
-- You can toggle showing or hiding completed tasks with a button.
-- Displays only one list at a time and lets you navigate between lists.
-- You can add new lists and delete existing lists.
-- The app remembers the selected list even after refreshing or sharing the URL.
-- All data is saved to `localStorage` so tasks and lists persist on page reload.
-- Responsive design works well on desktop and mobile devices.
+It is a full-featured **task manager web app** built with **React 18** and **Vite**, featuring secure authentication, cloud hosting, and persistent data storage.
 
 ---
 
-## How does it work?
+## 🌟 Live Demo
 
-- Built with React components like `Navbar`, `TaskForm`, `TaskList`, `TaskItem`, `Footer`, `AddListForm`, `ListSelector`, and `TaskPage`.
-- Uses React Router for routing and navigation between different lists.
-- Utilizes React Context API for global state management of lists, tasks, and current selection.
-- Implements conditional rendering and list rendering for dynamic UI.
-- Employs the `children` prop for reusable components and clean structure.
-- Saves and retrieves lists, tasks, and selected list from `localStorage` for persistence.
+🔗 [Try the app on Firebase Hosting](https://your-firebase-link.web.app)  
+🔗 [View the GitHub repo](https://github.com/DanielAlvarezU/DanielAlvarezU-mtm6404-task-manager-Danielalvarezu)
 
 ---
 
-## Technologies
+## ✅ Features
 
-- React 18  
-- Vite  
-- React Router DOM  
-- HTML5 & CSS3 (custom styling)  
-- Context API  
-- LocalStorage for persistence
+- **User Authentication with Firebase** (Google Sign-In)
+- Create multiple task lists
+- Add tasks with **text** and **priority** (High / Medium / Low)
+- Tasks are sorted automatically by priority
+- Mark tasks as complete or incomplete
+- Delete individual tasks
+- Toggle visibility of completed tasks
+- Navigate between different lists
+- Add or delete entire lists
+- **URL reflects current list selection** and remains even after reload
+- **Responsive design** for desktop & mobile
+- All tasks and lists are **saved in localStorage**
+- **Deployed with Firebase Hosting**
 
 ---
 
+## ⚙️ How It Works
+
+- Built using modular **React components**:
+  - `Navbar`, `TaskForm`, `TaskList`, `TaskItem`, `Footer`, `AddListForm`, `ListSelector`, `TaskPage`
+- Uses **React Router** for page navigation between task lists
+- Global state is handled through the **Context API**
+- Firebase **Authentication** allows users to sign in securely
+- App is **deployed with Firebase Hosting**
+- Uses **localStorage** to persist user task data (no backend needed)
+- Built with clean architecture, reusable components, and responsive layout
+
+---
+
+## 🧰 Technologies Used
+
+- **React 18**
+- **Vite**
+- **React Router DOM**
+- **Context API**
+- **Firebase Authentication**
+- **Firebase Hosting**
+- **HTML5 & CSS3**
+- **localStorage** (for saving task data)
+
+---
+
+## 📁 Project Setup
+
+To run locally:
+
+```bash
+npm install
+npm run dev
 ## Notes
 
 This project is part of the **MTM6404 Web Applications** course.  
